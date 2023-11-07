@@ -33,6 +33,9 @@ def excluir_tarefa(event):
 root = tk.Tk()
 root.title("Gerenciamento de Tarefas")
 
+# Define as dimensões da janela e impede a maximização e redimensionamento
+root.resizable(False, False)  # Impede o redimensionamento da janela
+
 # Frame para campos de entrada
 frame_campos = tk.Frame(root)
 frame_campos.pack()
