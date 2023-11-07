@@ -1,19 +1,34 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, filedialog
 from tkinter import messagebox
 
 # Funções para as opções do menu
-def novo_arquivo():
-    # Lógica para criar um novo arquivo
-    pass
+def nova_agenda():
+    resposta = messagebox.askquestion("Gerar Nova Agenda", "Deseja gerar uma nova agenda em branco?")
+    if resposta == 'yes':
+        for item in tabela.get_children():
+            tabela.delete(item)
 
-def salvar_arquivo():
-    # Lógica para salvar o arquivo
-    pass
+def salvar_agenda():
+    filepath = filedialog.asksaveasfilename(defaultextension=".agn", filetypes=(("Agenda Files", "*.agn"), ("All Files", "*.*")))
+    if filepath:
+        with open(filepath, 'w') as file:
+            for item in tabela.get_children():
+                values = tabela.item(item)['values']
+                file.write(','.join(values) + '\n')
 
-def carregar_arquivo():
-    # Lógica para carregar um arquivo
-    pass
+def carregar_agenda():
+    filepath = filedialog.askopenfilename(filetypes=(("Agenda Files", "*.agn"), ("All Files", "*.*")))
+    if filepath:
+        # Limpar a tabela
+        for item in tabela.get_children():
+            tabela.delete(item)
+
+        # Carregar dados do arquivo selecionado para a tabela
+        with open(filepath, 'r') as file:
+            for line in file:
+                values = line.strip().split(',')
+                tabela.insert("", "end", values=values)
 
 def sair():
     root.destroy()
@@ -109,9 +124,9 @@ barra_menu = tk.Menu(root)
 
 # Menu Arquivo
 menu_arquivo = tk.Menu(barra_menu, tearoff=0)
-menu_arquivo.add_command(label="Novo", command=novo_arquivo)
-menu_arquivo.add_command(label="Salvar", command=salvar_arquivo)
-menu_arquivo.add_command(label="Carregar", command=carregar_arquivo)
+menu_arquivo.add_command(label="Novo", command=nova_agenda)
+menu_arquivo.add_command(label="Salvar", command=salvar_agenda)
+menu_arquivo.add_command(label="Carregar", command=carregar_agenda)
 menu_arquivo.add_separator()
 menu_arquivo.add_command(label="Sair", command=sair)
 barra_menu.add_cascade(label="Arquivo", menu=menu_arquivo)
