@@ -12,3 +12,13 @@ Uma aplicação Tkinter que é um Gerenciador de Tarefas
 - Data e Hora são campos que validam um máximo de caracteres permitidos
   
 ![image](https://github.com/tiago3186/GerenciadorTarefas/assets/132753395/a414b430-8e0c-4bc4-83c7-4452c5e27130)
+
+### Requisitos
+- Python 3.x
+- Biblioteca Tkinter (normalmente incluída na instalação padrão do Python)
+Certifique-se de ter os requisitos instalados para executar o aplicativo.
+
+### Como Usar
+- Clone ou baixe o repositório.
+- Execute o arquivo main.py.
+- Utilize a interface gráfica para adicionar, salvar, carregar e gerenciar tarefas.
