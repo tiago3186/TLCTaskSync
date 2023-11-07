@@ -16,7 +16,7 @@ def adicionar_tarefa():
         entrada_data.delete(0, "end")
         # Adiciona um botão "X" para excluir o registro
         idx = tabela.index("end")  # Obtém o índice do último registro
-        tabela.set(idx, "#", "X")  # Insere "X" na última linha da coluna "#"
+        
     else:
         messagebox.showwarning("Erro", "Por favor, preencha todos os campos.")
 
