@@ -10,12 +10,20 @@ def adicionar_tarefa():
     # Verifica se os campos não estão vazios
     if nome and data:
         # Insere a tarefa na tabela
-        tabela.insert("", "end", values=(nome, data))
+        tabela.insert("", "end", values=(nome, data, "X"))
         # Limpa os campos de entrada
         entrada_nome.delete(0, "end")
         entrada_data.delete(0, "end")
+        # Adiciona um botão "X" para excluir o registro
+        idx = tabela.index("end")  # Obtém o índice do último registro
+        tabela.set(idx, "#", "X")  # Insere "X" na última linha da coluna "#"
     else:
         messagebox.showwarning("Erro", "Por favor, preencha todos os campos.")
+
+# Função para excluir uma tarefa
+def excluir_tarefa(event):
+    item = tabela.selection()[0]  # Obtém o item selecionado
+    tabela.delete(item)  # Remove o item selecionado da tabela
 
 # Cria a janela principal
 root = tk.Tk()
@@ -43,13 +51,20 @@ frame_tabela = tk.Frame(root)
 frame_tabela.pack()
 
 # Cria a tabela
-colunas = ("Nome da Tarefa", "Data da Tarefa")
+colunas = ("Nome da Tarefa", "Data da Tarefa", "#")
 tabela = ttk.Treeview(frame_tabela, columns=colunas, show="headings")
 
 # Define os títulos das colunas
 for col in colunas:
     tabela.heading(col, text=col)
     tabela.column(col, anchor="center")
+
+tabela.column("#", width=50, anchor="center")  # Definindo a largura da coluna com os botões "X"
+
 tabela.pack()
 
+# Vincula a função para excluir à tabela
+tabela.bind('<Button-1>', excluir_tarefa)
+
 root.mainloop()
+
