@@ -6,14 +6,16 @@ from tkinter import messagebox
 def adicionar_tarefa():
     nome = entrada_nome.get()
     data = entrada_data.get()
+    hora = entrada_hora.get()
 
     # Verifica se os campos não estão vazios
-    if nome and data:
+    if nome and data and hora:
         # Insere a tarefa na tabela
-        tabela.insert("", "end", values=(nome, data, "X"))
+        tabela.insert("", "end", values=(nome, data, hora, "X"))
         # Limpa os campos de entrada
         entrada_nome.delete(0, "end")
         entrada_data.delete(0, "end")
+        entrada_hora.delete(0, "end")
         # Adiciona um botão "X" para excluir o registro
         idx = tabela.index("end")  # Obtém o índice do último registro
         
@@ -42,16 +44,20 @@ tk.Label(frame_campos, text="Data da Tarefa:").grid(row=1, column=0)
 entrada_data = tk.Entry(frame_campos)
 entrada_data.grid(row=1, column=1)
 
+tk.Label(frame_campos, text="Horário da Tarefa:").grid(row=2, column=0)
+entrada_hora = tk.Entry(frame_campos)
+entrada_hora.grid(row=2, column=1)
+
 # Botão para adicionar a tarefa
 botao_inserir = tk.Button(frame_campos, text="Inserir Tarefa", command=adicionar_tarefa)
-botao_inserir.grid(row=2, columnspan=2)
+botao_inserir.grid(row=3, columnspan=2)
 
 # Frame para a tabela de tarefas
 frame_tabela = tk.Frame(root)
 frame_tabela.pack()
 
 # Cria a tabela
-colunas = ("Nome da Tarefa", "Data da Tarefa", "#")
+colunas = ("Nome da Tarefa", "Data da Tarefa", "Horário da Tarefa", "#")
 tabela = ttk.Treeview(frame_tabela, columns=colunas, show="headings")
 
 # Define os títulos das colunas
