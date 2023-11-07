@@ -7,15 +7,17 @@ def adicionar_tarefa():
     nome = entrada_nome.get()
     data = entrada_data.get()
     hora = entrada_hora.get()
+    descricao = entrada_descricao.get()
 
     # Verifica se os campos não estão vazios
-    if nome and data and hora:
+    if nome and data and hora and descricao:
         # Insere a tarefa na tabela
-        tabela.insert("", "end", values=(nome, data, hora, "X"))
+        tabela.insert("", "end", values=(nome, data, hora, descricao, "X"))
         # Limpa os campos de entrada
         entrada_nome.delete(0, "end")
         entrada_data.delete(0, "end")
         entrada_hora.delete(0, "end")
+        entrada_descricao.delete(0, "end")
         # Adiciona um botão "X" para excluir o registro
         idx = tabela.index("end")  # Obtém o índice do último registro
         
@@ -48,16 +50,20 @@ tk.Label(frame_campos, text="Horário da Tarefa:").grid(row=2, column=0)
 entrada_hora = tk.Entry(frame_campos)
 entrada_hora.grid(row=2, column=1)
 
+tk.Label(frame_campos, text="Descrição:").grid(row=3, column=0)
+entrada_descricao = tk.Entry(frame_campos)
+entrada_descricao.grid(row=3, column=1)
+
 # Botão para adicionar a tarefa
 botao_inserir = tk.Button(frame_campos, text="Inserir Tarefa", command=adicionar_tarefa)
-botao_inserir.grid(row=3, columnspan=2)
+botao_inserir.grid(row=4, columnspan=2)
 
 # Frame para a tabela de tarefas
 frame_tabela = tk.Frame(root)
 frame_tabela.pack()
 
 # Cria a tabela
-colunas = ("Nome da Tarefa", "Data da Tarefa", "Horário da Tarefa", "#")
+colunas = ("Nome da Tarefa", "Data", "Horário", "Descrição", "#")
 tabela = ttk.Treeview(frame_tabela, columns=colunas, show="headings")
 
 # Define os títulos das colunas
@@ -65,6 +71,9 @@ for col in colunas:
     tabela.heading(col, text=col)
     tabela.column(col, anchor="center")
 
+tabela.column("Data", width=90, anchor="center")
+tabela.column("Horário", width=90, anchor="center")
+tabela.column("Descrição", width=400, anchor="center")
 tabela.column("#", width=50, anchor="center")  # Definindo a largura da coluna com os botões "X"
 
 tabela.pack()
