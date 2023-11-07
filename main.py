@@ -2,6 +2,30 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
+# Funções para as opções do menu
+def novo_arquivo():
+    # Lógica para criar um novo arquivo
+    pass
+
+def salvar_arquivo():
+    # Lógica para salvar o arquivo
+    pass
+
+def carregar_arquivo():
+    # Lógica para carregar um arquivo
+    pass
+
+def sair():
+    root.destroy()
+
+def ajuda():
+    # Lógica para fornecer ajuda
+    pass
+
+def sobre():
+    # Lógica para exibir informações sobre o programa
+    pass
+
 # Função para adicionar a tarefa
 def adicionar_tarefa():
     nome = entrada_nome.get()
@@ -79,6 +103,36 @@ root.title("Gerenciamento de Tarefas")
 
 # Define as dimensões da janela e impede a maximização e redimensionamento
 root.resizable(False, False)  # Impede o redimensionamento da janela
+
+# Cria a barra de menus
+barra_menu = tk.Menu(root)
+
+# Menu Arquivo
+menu_arquivo = tk.Menu(barra_menu, tearoff=0)
+menu_arquivo.add_command(label="Novo", command=novo_arquivo)
+menu_arquivo.add_command(label="Salvar", command=salvar_arquivo)
+menu_arquivo.add_command(label="Carregar", command=carregar_arquivo)
+menu_arquivo.add_separator()
+menu_arquivo.add_command(label="Sair", command=sair)
+barra_menu.add_cascade(label="Arquivo", menu=menu_arquivo)
+
+# Menu Editar
+menu_editar = tk.Menu(barra_menu, tearoff=0)
+# Aqui você pode adicionar opções para o menu Editar, se necessário
+barra_menu.add_cascade(label="Editar", menu=menu_editar)
+
+# Menu Ferramentas
+menu_ferramentas = tk.Menu(barra_menu, tearoff=0)
+# Aqui você pode adicionar opções para o menu Ferramentas, se necessário
+barra_menu.add_cascade(label="Ferramentas", menu=menu_ferramentas)
+
+# Menu Ajuda
+menu_ajuda = tk.Menu(barra_menu, tearoff=0)
+menu_ajuda.add_command(label="Ajuda", command=ajuda)
+menu_ajuda.add_command(label="Sobre", command=sobre)
+barra_menu.add_cascade(label="Ajuda", menu=menu_ajuda)
+
+root.config(menu=barra_menu)
 
 # Frame para campos de entrada
 frame_campos = tk.Frame(root, padx=10, pady=10)
