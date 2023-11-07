@@ -20,7 +20,6 @@ def adicionar_tarefa():
         entrada_descricao.delete(0, "end")
         # Adiciona um botão "X" para excluir o registro
         idx = tabela.index("end")  # Obtém o índice do último registro
-        
     else:
         messagebox.showwarning("Erro", "Por favor, preencha todos os campos.")
 
@@ -32,6 +31,19 @@ def excluir_tarefa(event):
         item = tabela.identify_row(event.y)  # Obtém o item (linha) selecionado
         tabela.delete(item)  # Remove o item selecionado da tabela
 
+# Função para formatar data no formato dd/mm/yyyy enquanto o usuário digita
+def formatar_data(event):
+    data = entrada_data.get()
+    if len(data) == 2:
+        entrada_data.insert(tk.END, '/')
+    if len(data) == 5:
+        entrada_data.insert(tk.END, '/')
+
+# Função para formatar hora no formato hh:mm enquanto o usuário digita
+def formatar_hora(event):
+    hora = entrada_hora.get()
+    if len(hora) == 2:
+        entrada_hora.insert(tk.END, ':')
 
 # Cria a janela principal
 root = tk.Tk()
@@ -49,13 +61,15 @@ tk.Label(frame_campos, text="Nome da Tarefa:").grid(row=0, column=0)
 entrada_nome = tk.Entry(frame_campos)
 entrada_nome.grid(row=0, column=1, padx=5, pady=5)
 
-tk.Label(frame_campos, text="Data da Tarefa:").grid(row=1, column=0)
+tk.Label(frame_campos, text="Data da Tarefa (dd/mm/yyyy):").grid(row=1, column=0)
 entrada_data = tk.Entry(frame_campos)
 entrada_data.grid(row=1, column=1, padx=5, pady=5)
+entrada_data.bind('<KeyRelease>', formatar_data)
 
-tk.Label(frame_campos, text="Horário da Tarefa:").grid(row=2, column=0)
+tk.Label(frame_campos, text="Horário da Tarefa (hh:mm):").grid(row=2, column=0)
 entrada_hora = tk.Entry(frame_campos)
 entrada_hora.grid(row=2, column=1, padx=5, pady=5)
+entrada_hora.bind('<KeyRelease>', formatar_hora)
 
 tk.Label(frame_campos, text="Descrição:").grid(row=3, column=0)
 entrada_descricao = tk.Entry(frame_campos)
