@@ -50,16 +50,19 @@ def excluir_tarefa(event):
 # Função para formatar data no formato dd/mm/yyyy enquanto o usuário digita
 def formatar_data(event):
     data = entrada_data.get()
-    if len(data) == 2:
+    if len(data) == 2 or len(data) == 5:
         entrada_data.insert(tk.END, '/')
-    if len(data) == 5:
-        entrada_data.insert(tk.END, '/')
+    elif len(data) >= 10:
+        entrada_data.delete(10, tk.END)  # Limite de 10 caracteres, exclui qualquer entrada adicional
 
 # Função para formatar hora no formato hh:mm enquanto o usuário digita
 def formatar_hora(event):
     hora = entrada_hora.get()
     if len(hora) == 2:
         entrada_hora.insert(tk.END, ':')
+    elif len(hora) >= 5:
+        entrada_hora.delete(5, tk.END)  # Limite de 5 caracteres, exclui qualquer entrada adicional
+
 
 # Cria a janela principal
 root = tk.Tk()
