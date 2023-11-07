@@ -5,7 +5,7 @@ Uma aplicação Tkinter que é um Gerenciador de Tarefas
 - Inserir tarefas, com nome, data, hora e descrição
 - Excluir tarefas
 - Ordenar tarefas por data e hora
-- Salvar agenda e carregar agendas salvas
+- Salvar agenda no formato .agn e carregar agendas salvas
 
 ### Características
 - Data e Hora são campos que preenchem automaticamente no formato dd/mm/aaaa e hh:mm
