@@ -26,8 +26,12 @@ def adicionar_tarefa():
 
 # Função para excluir uma tarefa
 def excluir_tarefa(event):
-    item = tabela.selection()[0]  # Obtém o item selecionado
-    tabela.delete(item)  # Remove o item selecionado da tabela
+    coluna_clicada = tabela.identify_column(event.x)  # Identifica a coluna clicada
+    print("Coluna clicada é " + coluna_clicada)
+    if coluna_clicada == "#5":  # Verifica se a coluna é a de exclusão
+        item = tabela.identify_row(event.y)  # Obtém o item (linha) selecionado
+        tabela.delete(item)  # Remove o item selecionado da tabela
+
 
 # Cria a janela principal
 root = tk.Tk()
@@ -85,4 +89,3 @@ tabela.pack()
 tabela.bind('<Button-1>', excluir_tarefa)
 
 root.mainloop()
-
