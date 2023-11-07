@@ -21,6 +21,15 @@ def adicionar_tarefa():
     else:
         messagebox.showwarning("Erro", "Por favor, preencha todos os campos.")
 
+# Função para ordenar as tarefas por data e horário
+def ordenar_tarefas():
+    tarefas = [(tabela.item(item)['values'][1], tabela.item(item)['values'][2], item) for item in tabela.get_children()]
+    tarefas_ordenadas = sorted(tarefas, key=lambda x: (x[0], x[1]))  # Ordena primeiro por data e secundariamente por horário
+
+    # Reinsere as tarefas na tabela na ordem classificada
+    for index, (data, hora, item) in enumerate(tarefas_ordenadas):
+        tabela.move(item, '', index)
+
 # Função para verificar se a data está no formato correto
 def validar_data(data):
     # Verifica se a data tem o formato dd/mm/yyyy e se o dia e mês estão dentro dos limites
@@ -97,6 +106,10 @@ entrada_descricao.grid(row=3, column=1, padx=5, pady=5)
 # Botão para adicionar a tarefa
 botao_inserir = tk.Button(frame_campos, text="Inserir Tarefa", command=adicionar_tarefa)
 botao_inserir.grid(row=4, columnspan=2, padx=5, pady=5)
+
+# Botão para ordenar as tarefas
+botao_ordenar = tk.Button(frame_campos, text="Ordenar Tarefas", command=ordenar_tarefas)
+botao_ordenar.grid(row=5, columnspan=2, padx=5, pady=5)
 
 # Frame para a tabela de tarefas
 frame_tabela = tk.Frame(root, padx=10, pady=10)
