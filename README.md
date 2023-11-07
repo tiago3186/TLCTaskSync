@@ -15,8 +15,7 @@ Uma aplicação Tkinter que é um Gerenciador de Tarefas
 
 ### Requisitos
 - Python 3.x
-- Biblioteca Tkinter (normalmente incluída na instalação padrão do Python)
-Certifique-se de ter os requisitos instalados para executar o aplicativo.
+- Biblioteca Tkinter
 
 ### Como Usar
 - Clone ou baixe o repositório.
