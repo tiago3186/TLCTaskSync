@@ -37,32 +37,32 @@ root.title("Gerenciamento de Tarefas")
 root.resizable(False, False)  # Impede o redimensionamento da janela
 
 # Frame para campos de entrada
-frame_campos = tk.Frame(root)
+frame_campos = tk.Frame(root, padx=10, pady=10)
 frame_campos.pack()
 
 # Campos de entrada
 tk.Label(frame_campos, text="Nome da Tarefa:").grid(row=0, column=0)
 entrada_nome = tk.Entry(frame_campos)
-entrada_nome.grid(row=0, column=1)
+entrada_nome.grid(row=0, column=1, padx=5, pady=5)
 
 tk.Label(frame_campos, text="Data da Tarefa:").grid(row=1, column=0)
 entrada_data = tk.Entry(frame_campos)
-entrada_data.grid(row=1, column=1)
+entrada_data.grid(row=1, column=1, padx=5, pady=5)
 
 tk.Label(frame_campos, text="Horário da Tarefa:").grid(row=2, column=0)
 entrada_hora = tk.Entry(frame_campos)
-entrada_hora.grid(row=2, column=1)
+entrada_hora.grid(row=2, column=1, padx=5, pady=5)
 
 tk.Label(frame_campos, text="Descrição:").grid(row=3, column=0)
 entrada_descricao = tk.Entry(frame_campos)
-entrada_descricao.grid(row=3, column=1)
+entrada_descricao.grid(row=3, column=1, padx=5, pady=5)
 
 # Botão para adicionar a tarefa
 botao_inserir = tk.Button(frame_campos, text="Inserir Tarefa", command=adicionar_tarefa)
-botao_inserir.grid(row=4, columnspan=2)
+botao_inserir.grid(row=4, columnspan=2, padx=5, pady=5)
 
 # Frame para a tabela de tarefas
-frame_tabela = tk.Frame(root)
+frame_tabela = tk.Frame(root, padx=10, pady=10)
 frame_tabela.pack()
 
 # Cria a tabela
