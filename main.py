@@ -9,19 +9,35 @@ def adicionar_tarefa():
     hora = entrada_hora.get()
     descricao = entrada_descricao.get()
 
-    # Verifica se os campos não estão vazios
     if nome and data and hora and descricao:
-        # Insere a tarefa na tabela
-        tabela.insert("", "end", values=(nome, data, hora, descricao, "X"))
-        # Limpa os campos de entrada
-        entrada_nome.delete(0, "end")
-        entrada_data.delete(0, "end")
-        entrada_hora.delete(0, "end")
-        entrada_descricao.delete(0, "end")
-        # Adiciona um botão "X" para excluir o registro
-        idx = tabela.index("end")  # Obtém o índice do último registro
+        if validar_data(data) and validar_hora(hora):
+            tabela.insert("", "end", values=(nome, data, hora, descricao, "X"))
+            entrada_nome.delete(0, "end")
+            entrada_data.delete(0, "end")
+            entrada_hora.delete(0, "end")
+            entrada_descricao.delete(0, "end")
+        else:
+            messagebox.showwarning("Erro", "Formato de data ou hora inválido.")
     else:
         messagebox.showwarning("Erro", "Por favor, preencha todos os campos.")
+
+# Função para verificar se a data está no formato correto
+def validar_data(data):
+    # Verifica se a data tem o formato dd/mm/yyyy e se o dia e mês estão dentro dos limites
+    try:
+        dia, mes, ano = map(int, data.split('/'))
+        return 1 <= dia <= 31 and 1 <= mes <= 12
+    except ValueError:
+        return False
+
+# Função para verificar se a hora está no formato correto
+def validar_hora(hora):
+    # Verifica se a hora tem o formato hh:mm e se a hora e minutos estão dentro dos limites
+    try:
+        horas, minutos = map(int, hora.split(':'))
+        return 0 <= horas <= 23 and 0 <= minutos <= 59
+    except ValueError:
+        return False
 
 # Função para excluir uma tarefa
 def excluir_tarefa(event):
