@@ -13,7 +13,7 @@ Uma aplicação Tkinter que é um Gerenciador de Tarefas
 - Tem uma Splash Screen de apresentação  
 - Tela Sobre com detalhes sobre a aplicação  
 
-![image](https://github.com/tiago3186/GerenciadorTarefas/assets/132753395/f9864c95-1fde-4d88-84b5-68dbb152dc36)
+![Alt text](image.png)
 
 
 ### Requisitos
