@@ -1,6 +1,10 @@
 import tkinter as tk
 from tkinter import ttk, filedialog
 from tkinter import messagebox
+import os
+
+fileName = ""  # Variável para armazenar o nome do arquivo da agenda
+fileDir = ""  # Variável para armazenar o diretório do arquivo da agenda
 
 # Funções para as opções do menu
 def nova_agenda():
@@ -10,8 +14,35 @@ def nova_agenda():
             tabela.delete(item)
 
 def salvar_agenda():
+    global fileName  # Utilize a variável global fileName
+    global fileDir
+
+    if not fileName:  # Se fileName estiver vazio
+        filepath = filedialog.asksaveasfilename(defaultextension=".agn", filetypes=(("Agenda Files", "*.agn"), ("All Files", "*.*")))
+        if filepath:
+            fileName = os.path.basename(filepath)  # Atualiza o fileName com o nome do arquivo
+            fileDir = os.path.dirname(filepath)
+            print(fileDir)
+            with open(filepath, 'w') as file:
+                for item in tabela.get_children():
+                    values = tabela.item(item)['values']
+                    file.write(','.join(values) + '\n')
+    else:
+        # Se fileName não estiver vazio, salva por cima do arquivo existente
+        filepath = os.path.join(fileDir, fileName)
+        with open(filepath, 'w') as file:
+            for item in tabela.get_children():
+                values = tabela.item(item)['values']
+                file.write(','.join(values) + '\n')
+                print(filepath)
+               
+
+def salvar_agenda_como():
+    global fileName  # Utilize a variável global fileName
+
     filepath = filedialog.asksaveasfilename(defaultextension=".agn", filetypes=(("Agenda Files", "*.agn"), ("All Files", "*.*")))
     if filepath:
+        fileName = os.path.basename(filepath)  # Atualiza o fileName com o nome do arquivo
         with open(filepath, 'w') as file:
             for item in tabela.get_children():
                 values = tabela.item(item)['values']
@@ -114,7 +145,8 @@ def formatar_hora(event):
 
 # Cria a janela principal
 root = tk.Tk()
-root.title("Gerenciamento de Tarefas")
+root.title("TLC TaskSync")
+root.iconbitmap('agenda.ico')
 
 # Define as dimensões da janela e impede a maximização e redimensionamento
 root.resizable(False, False)  # Impede o redimensionamento da janela
@@ -126,6 +158,7 @@ barra_menu = tk.Menu(root)
 menu_arquivo = tk.Menu(barra_menu, tearoff=0)
 menu_arquivo.add_command(label="Novo", command=nova_agenda)
 menu_arquivo.add_command(label="Salvar", command=salvar_agenda)
+menu_arquivo.add_command(label="Salvar Como", command=salvar_agenda_como)
 menu_arquivo.add_command(label="Carregar", command=carregar_agenda)
 menu_arquivo.add_separator()
 menu_arquivo.add_command(label="Sair", command=sair)
@@ -154,31 +187,32 @@ frame_campos = tk.Frame(root, padx=10, pady=10)
 frame_campos.pack()
 
 # Campos de entrada
-tk.Label(frame_campos, text="Nome da Tarefa:").grid(row=0, column=0)
+tk.Label(frame_campos, text="Nome da Tarefa:").grid(row=0, column=0, sticky='w')
 entrada_nome = tk.Entry(frame_campos)
-entrada_nome.grid(row=0, column=1, padx=5, pady=5)
+entrada_nome.grid(row=0, column=1, padx=5, pady=5, sticky='w')
 
-tk.Label(frame_campos, text="Data da Tarefa (dd/mm/yyyy):").grid(row=1, column=0)
+tk.Label(frame_campos, text="Data da Tarefa (dd/mm/yyyy):").grid(row=1, column=0, sticky='w')
 entrada_data = tk.Entry(frame_campos)
-entrada_data.grid(row=1, column=1, padx=5, pady=5)
+entrada_data.grid(row=1, column=1, padx=5, pady=5, sticky='w')
 entrada_data.bind('<KeyRelease>', formatar_data)
 
-tk.Label(frame_campos, text="Horário da Tarefa (hh:mm):").grid(row=2, column=0)
+tk.Label(frame_campos, text="Horário da Tarefa (hh:mm):").grid(row=2, column=0, sticky='w')
 entrada_hora = tk.Entry(frame_campos)
-entrada_hora.grid(row=2, column=1, padx=5, pady=5)
+entrada_hora.grid(row=2, column=1, padx=5, pady=5, sticky='w')
 entrada_hora.bind('<KeyRelease>', formatar_hora)
 
-tk.Label(frame_campos, text="Descrição:").grid(row=3, column=0)
-entrada_descricao = tk.Entry(frame_campos)
-entrada_descricao.grid(row=3, column=1, padx=5, pady=5)
+tk.Label(frame_campos, text="Descrição:").grid(row=3, column=0, sticky='w')
+entrada_descricao = tk.Entry(frame_campos, width=45)
+entrada_descricao.grid(row=3, column=1, padx=5, pady=5, sticky='w')
 
 # Botão para adicionar a tarefa
 botao_inserir = tk.Button(frame_campos, text="Inserir Tarefa", command=adicionar_tarefa)
-botao_inserir.grid(row=4, columnspan=2, padx=5, pady=5)
+botao_inserir.grid(row=4, column=1, padx=5, pady=5, sticky='w')
 
 # Botão para ordenar as tarefas
 botao_ordenar = tk.Button(frame_campos, text="Ordenar Tarefas", command=ordenar_tarefas)
-botao_ordenar.grid(row=5, columnspan=2, padx=5, pady=5)
+botao_ordenar.grid(row=4, column=1, padx=5, pady=5)
+
 
 # Frame para a tabela de tarefas
 frame_tabela = tk.Frame(root, padx=10, pady=10)
