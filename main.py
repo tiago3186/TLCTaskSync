@@ -154,23 +154,23 @@ frame_campos = tk.Frame(root, padx=10, pady=10)
 frame_campos.pack()
 
 # Campos de entrada
-tk.Label(frame_campos, text="Nome da Tarefa:").grid(row=0, column=0)
+tk.Label(frame_campos, text="Nome da Tarefa:").grid(row=0, column=0, sticky='w')
 entrada_nome = tk.Entry(frame_campos)
-entrada_nome.grid(row=0, column=1, padx=5, pady=5)
+entrada_nome.grid(row=0, column=1, padx=5, pady=5, sticky='w')
 
-tk.Label(frame_campos, text="Data da Tarefa (dd/mm/yyyy):").grid(row=1, column=0)
+tk.Label(frame_campos, text="Data da Tarefa (dd/mm/yyyy):").grid(row=1, column=0, sticky='w')
 entrada_data = tk.Entry(frame_campos)
-entrada_data.grid(row=1, column=1, padx=5, pady=5)
+entrada_data.grid(row=1, column=1, padx=5, pady=5, sticky='w')
 entrada_data.bind('<KeyRelease>', formatar_data)
 
-tk.Label(frame_campos, text="Horário da Tarefa (hh:mm):").grid(row=2, column=0)
+tk.Label(frame_campos, text="Horário da Tarefa (hh:mm):").grid(row=2, column=0, sticky='w')
 entrada_hora = tk.Entry(frame_campos)
-entrada_hora.grid(row=2, column=1, padx=5, pady=5)
+entrada_hora.grid(row=2, column=1, padx=5, pady=5, sticky='w')
 entrada_hora.bind('<KeyRelease>', formatar_hora)
 
-tk.Label(frame_campos, text="Descrição:").grid(row=3, column=0)
-entrada_descricao = tk.Entry(frame_campos)
-entrada_descricao.grid(row=3, column=1, padx=5, pady=5)
+tk.Label(frame_campos, text="Descrição:").grid(row=3, column=0, sticky='w')
+entrada_descricao = tk.Text(frame_campos, height=4, width=30)  # Configuração de altura e largura personalizadas
+entrada_descricao.grid(row=3, column=1, padx=5, pady=5, sticky='w')
 
 # Botão para adicionar a tarefa
 botao_inserir = tk.Button(frame_campos, text="Inserir Tarefa", command=adicionar_tarefa)
