@@ -6,6 +6,13 @@ import os
 fileName = ""  # Variável para armazenar o nome do arquivo da agenda
 fileDir = ""  # Variável para armazenar o diretório do arquivo da agenda
 
+def atualizar_titulo():
+    if fileName:
+        root.title(f"TLC TaskSync 2023 - {fileName}")
+    else:
+        root.title("TLC TaskSync 2023")
+  
+
 def fechar_splash():
     janela_splash.destroy()
 
@@ -15,10 +22,14 @@ def mostrar_tela_principal():
 
 # Funções para as opções do menu
 def nova_agenda():
+    global fileName
+    fileName = ""
     resposta = messagebox.askquestion("Gerar Nova Agenda", "Deseja gerar uma nova agenda em branco?")
     if resposta == 'yes':
         for item in tabela.get_children():
             tabela.delete(item)
+
+    atualizar_titulo()  
 
 def salvar_agenda():
     global fileName  # Utilize a variável global fileName
@@ -42,7 +53,8 @@ def salvar_agenda():
                 values = tabela.item(item)['values']
                 file.write(','.join(values) + '\n')
                 print(filepath)
-               
+
+    atualizar_titulo()         
 
 def salvar_agenda_como():
     global fileName  # Utilize a variável global fileName
@@ -55,8 +67,13 @@ def salvar_agenda_como():
                 values = tabela.item(item)['values']
                 file.write(','.join(values) + '\n')
 
+    atualizar_titulo()
+
 def carregar_agenda():
+    global fileName
+   
     filepath = filedialog.askopenfilename(filetypes=(("Agenda Files", "*.agn"), ("All Files", "*.*")))
+    fileName = os.path.basename(filepath)
     if filepath:
         # Limpar a tabela
         for item in tabela.get_children():
@@ -66,7 +83,9 @@ def carregar_agenda():
         with open(filepath, 'r') as file:
             for line in file:
                 values = line.strip().split(',')
-                tabela.insert("", "end", values=values)
+                tabela.insert("", "end", values=values)    
+
+    atualizar_titulo()   
 
 def sair():
     root.destroy()
