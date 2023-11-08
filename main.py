@@ -243,7 +243,7 @@ frame_tabela = tk.Frame(root, padx=10, pady=10)
 frame_tabela.pack()
 
 # Cria a tabela
-colunas = ("Nome da Tarefa", "Data", "Horário", "Descrição", "#")
+colunas = ("Nome da Tarefa", "Data", "Horário", "Descrição", "")
 tabela = ttk.Treeview(frame_tabela, columns=colunas, show="headings")
 
 # Define os títulos das colunas
@@ -254,7 +254,7 @@ for col in colunas:
 tabela.column("Data", width=90, anchor="center")
 tabela.column("Horário", width=90, anchor="center")
 tabela.column("Descrição", width=400, anchor="center")
-tabela.column("#", width=50, anchor="center")  # Definindo a largura da coluna com os botões "X"
+tabela.column("", width=50, anchor="center")  # Definindo a largura da coluna com os botões "X"
 
 tabela.pack()
 
