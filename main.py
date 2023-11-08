@@ -169,16 +169,17 @@ entrada_hora.grid(row=2, column=1, padx=5, pady=5, sticky='w')
 entrada_hora.bind('<KeyRelease>', formatar_hora)
 
 tk.Label(frame_campos, text="Descrição:").grid(row=3, column=0, sticky='w')
-entrada_descricao = tk.Text(frame_campos, height=4, width=30)  # Configuração de altura e largura personalizadas
+entrada_descricao = tk.Text(frame_campos, height=3, width=23)  # Configuração de altura e largura personalizadas
 entrada_descricao.grid(row=3, column=1, padx=5, pady=5, sticky='w')
 
 # Botão para adicionar a tarefa
 botao_inserir = tk.Button(frame_campos, text="Inserir Tarefa", command=adicionar_tarefa)
-botao_inserir.grid(row=4, columnspan=2, padx=5, pady=5)
+botao_inserir.grid(row=4, column=1, padx=5, pady=5, sticky='w')
 
 # Botão para ordenar as tarefas
 botao_ordenar = tk.Button(frame_campos, text="Ordenar Tarefas", command=ordenar_tarefas)
-botao_ordenar.grid(row=5, columnspan=2, padx=5, pady=5)
+botao_ordenar.grid(row=4, column=1, padx=5, pady=5, sticky='e')
+
 
 # Frame para a tabela de tarefas
 frame_tabela = tk.Frame(root, padx=10, pady=10)
