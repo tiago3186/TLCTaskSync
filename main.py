@@ -1,6 +1,10 @@
 import tkinter as tk
 from tkinter import ttk, filedialog
 from tkinter import messagebox
+import os
+
+fileName = ""  # Variável para armazenar o nome do arquivo da agenda
+fileDir = ""  # Variável para armazenar o diretório do arquivo da agenda
 
 # Funções para as opções do menu
 def nova_agenda():
@@ -10,8 +14,35 @@ def nova_agenda():
             tabela.delete(item)
 
 def salvar_agenda():
+    global fileName  # Utilize a variável global fileName
+    global fileDir
+
+    if not fileName:  # Se fileName estiver vazio
+        filepath = filedialog.asksaveasfilename(defaultextension=".agn", filetypes=(("Agenda Files", "*.agn"), ("All Files", "*.*")))
+        if filepath:
+            fileName = os.path.basename(filepath)  # Atualiza o fileName com o nome do arquivo
+            fileDir = os.path.dirname(filepath)
+            print(fileDir)
+            with open(filepath, 'w') as file:
+                for item in tabela.get_children():
+                    values = tabela.item(item)['values']
+                    file.write(','.join(values) + '\n')
+    else:
+        # Se fileName não estiver vazio, salva por cima do arquivo existente
+        filepath = os.path.join(fileDir, fileName)
+        with open(filepath, 'w') as file:
+            for item in tabela.get_children():
+                values = tabela.item(item)['values']
+                file.write(','.join(values) + '\n')
+                print(filepath)
+               
+
+def salvar_agenda_como():
+    global fileName  # Utilize a variável global fileName
+
     filepath = filedialog.asksaveasfilename(defaultextension=".agn", filetypes=(("Agenda Files", "*.agn"), ("All Files", "*.*")))
     if filepath:
+        fileName = os.path.basename(filepath)  # Atualiza o fileName com o nome do arquivo
         with open(filepath, 'w') as file:
             for item in tabela.get_children():
                 values = tabela.item(item)['values']
@@ -127,6 +158,7 @@ barra_menu = tk.Menu(root)
 menu_arquivo = tk.Menu(barra_menu, tearoff=0)
 menu_arquivo.add_command(label="Novo", command=nova_agenda)
 menu_arquivo.add_command(label="Salvar", command=salvar_agenda)
+menu_arquivo.add_command(label="Salvar Como", command=salvar_agenda_como)
 menu_arquivo.add_command(label="Carregar", command=carregar_agenda)
 menu_arquivo.add_separator()
 menu_arquivo.add_command(label="Sair", command=sair)
