@@ -69,8 +69,32 @@ def ajuda():
     pass
 
 def sobre():
-    # Lógica para exibir informações sobre o programa
-    pass
+    janela_sobre = tk.Toplevel(root)
+    janela_sobre.title("Sobre")
+    
+    # Carregar a imagem
+    imagem = tk.PhotoImage(file="agenda.png")
+    
+    # Exibir a imagem à esquerda
+    label_imagem = tk.Label(janela_sobre, image=imagem)
+    label_imagem.image = imagem  # Mantém uma referência à imagem
+    
+    label_imagem.grid(row=0, column=0, padx=10, pady=10, rowspan=3)
+    
+    # Textos
+    label_nome_app = tk.Label(janela_sobre, text="TLC Task Sync", font=("Arial", 14, "bold"))
+    label_nome_app.grid(row=0, column=1, padx=10, pady=10)
+    
+    label_desenvolvedor = tk.Label(janela_sobre, text="Desenvolvido por Tiago Custódio", font=("Arial", 12))
+    label_desenvolvedor.grid(row=1, column=1, padx=10, pady=5)
+    
+    # Função para fechar a janela "Sobre"
+    def fechar_janela():
+        janela_sobre.destroy()
+    
+    # Botão OK para fechar a janela
+    botao_ok = tk.Button(janela_sobre, text="OK", command=fechar_janela)
+    botao_ok.grid(row=2, column=1, padx=10, pady=10)
 
 # Função para adicionar a tarefa
 def adicionar_tarefa():
