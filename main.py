@@ -82,7 +82,7 @@ def sobre():
     label_imagem.grid(row=0, column=0, padx=10, pady=10, rowspan=3)
     
     # Textos
-    label_nome_app = tk.Label(janela_sobre, text="TLC Task Sync", font=("Arial", 14, "bold"))
+    label_nome_app = tk.Label(janela_sobre, text="TLC TaskSync 2023", font=("Arial", 14, "bold"))
     label_nome_app.grid(row=0, column=1, padx=10, pady=10)
     
     label_desenvolvedor = tk.Label(janela_sobre, text="Desenvolvido por Tiago Custódio", font=("Arial", 12))
@@ -169,7 +169,7 @@ def formatar_hora(event):
 
 # Cria a janela principal
 root = tk.Tk()
-root.title("TLC TaskSync")
+root.title("TLC TaskSync 2023")
 root.iconbitmap('agenda.ico')
 
 # Define as dimensões da janela e impede a maximização e redimensionamento
