@@ -114,7 +114,8 @@ def formatar_hora(event):
 
 # Cria a janela principal
 root = tk.Tk()
-root.title("Gerenciamento de Tarefas")
+root.title("TLC TaskSync")
+root.iconbitmap('agenda.ico')
 
 # Define as dimensões da janela e impede a maximização e redimensionamento
 root.resizable(False, False)  # Impede o redimensionamento da janela
@@ -169,7 +170,7 @@ entrada_hora.grid(row=2, column=1, padx=5, pady=5, sticky='w')
 entrada_hora.bind('<KeyRelease>', formatar_hora)
 
 tk.Label(frame_campos, text="Descrição:").grid(row=3, column=0, sticky='w')
-entrada_descricao = tk.Text(frame_campos, height=3, width=23)  # Configuração de altura e largura personalizadas
+entrada_descricao = tk.Entry(frame_campos, width=45)
 entrada_descricao.grid(row=3, column=1, padx=5, pady=5, sticky='w')
 
 # Botão para adicionar a tarefa
@@ -178,7 +179,7 @@ botao_inserir.grid(row=4, column=1, padx=5, pady=5, sticky='w')
 
 # Botão para ordenar as tarefas
 botao_ordenar = tk.Button(frame_campos, text="Ordenar Tarefas", command=ordenar_tarefas)
-botao_ordenar.grid(row=4, column=1, padx=5, pady=5, sticky='e')
+botao_ordenar.grid(row=4, column=1, padx=5, pady=5)
 
 
 # Frame para a tabela de tarefas
