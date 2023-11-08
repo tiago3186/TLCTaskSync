@@ -182,6 +182,19 @@ root.iconbitmap('agenda.ico')
 # Define as dimensões da janela e impede a maximização e redimensionamento
 root.resizable(False, False)  # Impede o redimensionamento da janela
 
+largura_janela = 900
+altura_janela = 450
+
+largura_tela = root.winfo_screenwidth()
+altura_tela = root.winfo_screenheight()
+
+# Calcula a posição para centralizar a janela
+pos_x = (largura_tela - largura_janela) // 2
+pos_y = (altura_tela - altura_janela) // 2
+
+# Define a geometria da janela para que ela seja centralizada
+root.geometry(f"{largura_janela}x{altura_janela}+{pos_x}+{pos_y}")
+
 # Configurações para desativar a janela principal temporariamente
 root.withdraw()
 
