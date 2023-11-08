@@ -78,6 +78,21 @@ def ajuda():
 def sobre():
     janela_sobre = tk.Toplevel(root)
     janela_sobre.title("Sobre")
+    janela_sobre.geometry("450x150")  # Defina o tamanho desejado
+    janela_sobre.resizable(False, False)  # Impede o redimensionamento da janela
+
+    largura_tela = root.winfo_screenwidth()
+    altura_tela = root.winfo_screenheight()
+
+    largura_janela = 450
+    altura_janela = 150
+
+    # Calcula a posição para centralizar a janela
+    pos_x = (largura_tela - largura_janela) // 2
+    pos_y = (altura_tela - altura_janela) // 2
+
+    # Define a geometria da janela para que ela seja centralizada
+    janela_sobre.geometry(f"{largura_janela}x{altura_janela}+{pos_x}+{pos_y}")
     
     # Carregar a imagem
     imagem = tk.PhotoImage(file="agenda.png")
