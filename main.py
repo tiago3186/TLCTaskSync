@@ -6,6 +6,13 @@ import os
 fileName = ""  # Variável para armazenar o nome do arquivo da agenda
 fileDir = ""  # Variável para armazenar o diretório do arquivo da agenda
 
+def fechar_splash():
+    janela_splash.destroy()
+
+def mostrar_tela_principal():
+    root.deiconify()
+    fechar_splash()
+
 # Funções para as opções do menu
 def nova_agenda():
     resposta = messagebox.askquestion("Gerar Nova Agenda", "Deseja gerar uma nova agenda em branco?")
@@ -174,6 +181,45 @@ root.iconbitmap('agenda.ico')
 
 # Define as dimensões da janela e impede a maximização e redimensionamento
 root.resizable(False, False)  # Impede o redimensionamento da janela
+
+# Configurações para desativar a janela principal temporariamente
+root.withdraw()
+
+# Cria a janela da Splash Screen
+janela_splash = tk.Toplevel(root)
+janela_splash.overrideredirect(True)  # Remove a barra de título
+janela_splash.geometry("300x200")  # Defina o tamanho desejado
+janela_splash.configure(background='white')  # Define a cor de fundo desejada
+
+# Configure as dimensões da Splash Screen
+largura = 500
+altura = 200
+largura_tela = root.winfo_screenwidth()
+altura_tela = root.winfo_screenheight()
+x = (largura_tela - largura) // 2
+y = (altura_tela - altura) // 2
+janela_splash.geometry(f"{largura}x{altura}+{x}+{y}")
+
+# Carregar a imagem "agenda.png"
+imagem = tk.PhotoImage(file="agenda.png")
+label_imagem = tk.Label(janela_splash, image=imagem)
+label_imagem.image = imagem
+label_imagem.pack(side="left")
+
+# Texto TLC TaskSync 2023
+label_nome_app = tk.Label(janela_splash, text="TLC TaskSync 2023", font=("Arial", 20, "bold"))
+label_nome_app.pack()
+
+# Texto Desenvolvido por Tiago Custodio
+label_desenvolvedor = tk.Label(janela_splash, text="Desenvolvido por Tiago Custodio", font=("Arial", 12))
+label_desenvolvedor.pack()
+
+# Texto Please Wait
+label_desenvolvedor = tk.Label(janela_splash, text="Please Wait....", font=("Arial", 8))
+label_desenvolvedor.pack()
+
+# Defina o tempo para exibir a tela de Splash e em seguida fechá-la
+janela_splash.after(3000, mostrar_tela_principal)  # 500ms = 0,5 segundos
 
 # Cria a barra de menus
 barra_menu = tk.Menu(root)
