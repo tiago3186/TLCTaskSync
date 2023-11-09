@@ -143,14 +143,16 @@ def adicionar_tarefa():
     data = entrada_data.get()
     hora = entrada_hora.get()
     descricao = entrada_descricao.get()
+    lembrete = "Sim" if ativar_lembrete.get() else "Não"  # Verifica se o checkbox está marcado
 
     if nome and data and hora and descricao:
         if validar_data(data) and validar_hora(hora):
-            tabela.insert("", "end", values=(nome, data, hora, descricao, "X"))
+            tabela.insert("", "end", values=(nome, data, hora, descricao, lembrete,"X"))
             entrada_nome.delete(0, "end")
             entrada_data.delete(0, "end")
             entrada_hora.delete(0, "end")
             entrada_descricao.delete(0, "end")
+            ativar_lembrete.set(False)  # Reseta o checkbox para desmarcado
         else:
             messagebox.showwarning("Erro", "Formato de data ou hora inválido.")
     else:
@@ -192,7 +194,7 @@ def validar_hora(hora):
 def excluir_tarefa(event):
     coluna_clicada = tabela.identify_column(event.x)  # Identifica a coluna clicada
     print("Coluna clicada é " + coluna_clicada)
-    if coluna_clicada == "#5":  # Verifica se a coluna é a de exclusão
+    if coluna_clicada == "#6":  # Verifica se a coluna é a de exclusão
         item = tabela.identify_row(event.y)  # Obtém o item (linha) selecionado
         tabela.delete(item)  # Remove o item selecionado da tabela
 
@@ -221,7 +223,7 @@ root.iconbitmap('agenda.ico')
 # Define as dimensões da janela e impede a maximização e redimensionamento
 root.resizable(False, False)  # Impede o redimensionamento da janela
 
-largura_janela = 900
+largura_janela = 1100
 altura_janela = 450
 
 largura_tela = root.winfo_screenwidth()
@@ -327,21 +329,26 @@ tk.Label(frame_campos, text="Descrição:").grid(row=3, column=0, sticky='w')
 entrada_descricao = tk.Entry(frame_campos, width=45)
 entrada_descricao.grid(row=3, column=1, padx=5, pady=5, sticky='w')
 
+# Campo de checkbox para ativar lembrete
+tk.Label(frame_campos, text="Ativar Lembrete:").grid(row=4, column=0, sticky='w')
+ativar_lembrete = tk.BooleanVar()  # Variável para armazenar o estado do checkbox
+checkbox_lembrete = tk.Checkbutton(frame_campos, variable=ativar_lembrete)
+checkbox_lembrete.grid(row=4, column=1, sticky='w')
+
 # Botão para adicionar a tarefa
 botao_inserir = tk.Button(frame_campos, text="Inserir Tarefa", command=adicionar_tarefa)
-botao_inserir.grid(row=4, column=1, padx=5, pady=5, sticky='w')
+botao_inserir.grid(row=5, column=1, padx=5, pady=5, sticky='w')
 
 # Botão para ordenar as tarefas
 botao_ordenar = tk.Button(frame_campos, text="Ordenar Tarefas", command=ordenar_tarefas)
-botao_ordenar.grid(row=4, column=1, padx=5, pady=5)
-
+botao_ordenar.grid(row=5, column=1, padx=5, pady=5)
 
 # Frame para a tabela de tarefas
 frame_tabela = tk.Frame(root, padx=10, pady=10)
 frame_tabela.pack()
 
 # Cria a tabela
-colunas = ("Nome da Tarefa", "Data", "Horário", "Descrição", "")
+colunas = ("Nome da Tarefa", "Data", "Horário", "Descrição", "Lembrete", "")
 tabela = ttk.Treeview(frame_tabela, columns=colunas, show="headings")
 
 # Define os títulos das colunas
@@ -352,6 +359,7 @@ for col in colunas:
 tabela.column("Data", width=90, anchor="center")
 tabela.column("Horário", width=90, anchor="center")
 tabela.column("Descrição", width=400, anchor="center")
+tabela.column("Lembrete", width=100, anchor="center")
 tabela.column("", width=50, anchor="center")  # Definindo a largura da coluna com os botões "X"
 
 tabela.pack()
