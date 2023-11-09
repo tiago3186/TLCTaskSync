@@ -11,7 +11,6 @@ Uma aplicação Tkinter que é um Gerenciador de Tarefas
 - Data e Hora são campos que preenchem automaticamente no formato dd/mm/aaaa e hh:mm
 - Data e Hora são campos que validam um máximo de caracteres permitidos
 - Tem uma Splash Screen de apresentação  
-![Alt text](image-1.png)
 - Tela Sobre com detalhes sobre a aplicação  
 
 ![Alt text](image.png)
