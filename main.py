@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, filedialog
 from tkinter import messagebox
 import os
+from datetime import datetime
 
 fileName = ""  # Variável para armazenar o nome do arquivo da agenda
 fileDir = ""  # Variável para armazenar o diretório do arquivo da agenda
@@ -143,20 +144,81 @@ def adicionar_tarefa():
     data = entrada_data.get()
     hora = entrada_hora.get()
     descricao = entrada_descricao.get()
-    lembrete = "Sim" if ativar_lembrete.get() else "Não"  # Verifica se o checkbox está marcado
+    lembrete = "Sim" if ativar_lembrete.get() else "Não"
 
     if nome and data and hora and descricao:
         if validar_data(data) and validar_hora(hora):
-            tabela.insert("", "end", values=(nome, data, hora, descricao, lembrete,"X"))
+            item = tabela.insert("", "end", values=(nome, data, hora, descricao, lembrete, "X"))
             entrada_nome.delete(0, "end")
             entrada_data.delete(0, "end")
             entrada_hora.delete(0, "end")
             entrada_descricao.delete(0, "end")
-            ativar_lembrete.set(False)  # Reseta o checkbox para desmarcado
+            ativar_lembrete.set(False)
+
+            if lembrete == "Sim":
+                agendar_lembrete(nome, data, hora, descricao)  # Agendar lembrete se estiver ativado
         else:
             messagebox.showwarning("Erro", "Formato de data ou hora inválido.")
     else:
         messagebox.showwarning("Erro", "Por favor, preencha todos os campos.")
+
+def agendar_lembrete(nome, data, hora, descricao):
+    # Formatando a data e hora para criar um objeto de data e hora
+    data_hora_str = f"{data} {hora}"
+    data_hora = datetime.strptime(data_hora_str, "%d/%m/%Y %H:%M")
+
+    # Obtendo a diferença entre a data atual e a data agendada
+    diferenca = (data_hora - datetime.now()).total_seconds()
+    print(diferenca)
+    # Agendando o lembrete para ser exibido quando a hora da tarefa chegar
+    root.after(int(diferenca * 1000), exibir_lembrete, nome, data, hora, descricao)
+
+def exibir_lembrete(nome, data, hora, descricao):
+    # Check if the task still exists in the table
+    task_exists = False
+
+    for item in tabela.get_children():
+        values = tabela.item(item)['values']
+        if values[:4] == [nome, data, hora, descricao]:
+            task_exists = True
+            break
+
+    if task_exists:
+        popup = tk.Toplevel(root)
+        popup.title("ALERTA DE TAREFA")
+        popup.geometry("400x150")  # Set initial size of the window
+        popup.resizable(False, False)  # Prevent resizing
+        popup.attributes("-topmost", True)  # Ensure the popup stays on top
+
+        # Texts for the reminder
+        label_grande = tk.Label(popup, text="ALERTA DE TAREFA", font=("Arial", 16, "bold"))
+        label_grande.pack()
+
+        label_nome = tk.Label(popup, text=f"Nome da Tarefa: {nome}")
+        label_nome.pack()
+
+        label_data = tk.Label(popup, text=f"Data: {data}")
+        label_data.pack()
+
+        label_hora = tk.Label(popup, text=f"Hora: {hora}")
+        label_hora.pack()
+
+        label_descricao = tk.Label(popup, text=f"Descrição: {descricao}")
+        label_descricao.pack()
+
+        # Button OK
+        botao_ok = tk.Button(popup, text="OK", command=popup.destroy)
+        botao_ok.pack()
+
+        # Function to focus the window (make it come to the front) when the popup is displayed
+        def focus_popup():
+            popup.focus_force()
+
+        # Schedule the popup to be shown
+        root.after(0, focus_popup)
+    else:
+        messagebox.showwarning("Tarefa não encontrada", "A tarefa foi removida ou não existe mais na lista.")
+
 
 # Função para ordenar as tarefas por data e horário
 def ordenar_tarefas():
