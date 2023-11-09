@@ -6,6 +6,7 @@ Uma aplicação Tkinter que é um Gerenciador de Tarefas
 - Excluir tarefas
 - Ordenar tarefas por data e hora
 - Salvar agenda no formato .agn e carregar agendas salvas
+- Programar alertas para datas e horários específicos
 
 ### Características
 - Data e Hora são campos que preenchem automaticamente no formato dd/mm/aaaa e hh:mm
@@ -13,7 +14,7 @@ Uma aplicação Tkinter que é um Gerenciador de Tarefas
 - Tem uma Splash Screen de apresentação  
 - Tela Sobre com detalhes sobre a aplicação  
 
-![Alt text](image.png)
+![Alt text](image-1.png)
 
 
 ### Requisitos
