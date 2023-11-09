@@ -158,8 +158,13 @@ def adicionar_tarefa():
 
 # Função para ordenar as tarefas por data e horário
 def ordenar_tarefas():
+    # Função auxiliar para converter a data no formato 'dd/mm/yyyy' para um formato que possa ser ordenado corretamente
+    def converter_data_formato(data):
+        partes_data = data.split('/')
+        return int(partes_data[2]), int(partes_data[1]), int(partes_data[0])
+
     tarefas = [(tabela.item(item)['values'][1], tabela.item(item)['values'][2], item) for item in tabela.get_children()]
-    tarefas_ordenadas = sorted(tarefas, key=lambda x: (x[0], x[1]))  # Ordena primeiro por data e secundariamente por horário
+    tarefas_ordenadas = sorted(tarefas, key=lambda x: (converter_data_formato(x[0]), int(x[1].replace(':', ''))))
 
     # Reinsere as tarefas na tabela na ordem classificada
     for index, (data, hora, item) in enumerate(tarefas_ordenadas):
