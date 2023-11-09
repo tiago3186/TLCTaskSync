@@ -3,6 +3,7 @@ from tkinter import ttk, filedialog
 from tkinter import messagebox
 import os
 from datetime import datetime
+import winsound
 
 fileName = ""  # Variável para armazenar o nome do arquivo da agenda
 fileDir = ""  # Variável para armazenar o diretório do arquivo da agenda
@@ -186,9 +187,18 @@ def exibir_lembrete(nome, data, hora, descricao):
     if task_exists:
         popup = tk.Toplevel(root)
         popup.title("ALERTA DE TAREFA")
-        popup.geometry("400x150")  # Set initial size of the window
+        popup.geometry("400x300")  # Set initial size of the window
         popup.resizable(False, False)  # Prevent resizing
         popup.attributes("-topmost", True)  # Ensure the popup stays on top
+
+        # Calculate the position to center the popup
+        x_pos = root.winfo_x() + (root.winfo_width() // 2) - (400 // 2)
+        y_pos = root.winfo_y() + (root.winfo_height() // 2) - (300 // 2)
+
+        popup.geometry(f"400x300+{x_pos}+{y_pos}")  # Center the popup window
+
+        # Play system alert sound
+        winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
 
         # Texts for the reminder
         label_grande = tk.Label(popup, text="ALERTA DE TAREFA", font=("Arial", 16, "bold"))
@@ -217,8 +227,7 @@ def exibir_lembrete(nome, data, hora, descricao):
         # Schedule the popup to be shown
         root.after(0, focus_popup)
     else:
-        messagebox.showwarning("Tarefa não encontrada", "A tarefa foi removida ou não existe mais na lista.")
-
+        print("Tarefa não encontrada", "A tarefa foi removida ou não existe mais na lista.")
 
 # Função para ordenar as tarefas por data e horário
 def ordenar_tarefas():
